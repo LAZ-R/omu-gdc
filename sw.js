@@ -1,4 +1,4 @@
-const version = '0.0.0.2';
+const version = '0.0.0.3';
 const CACHE_NAME = `omu-gdc-${version}`;
 
 const APP_SHELL = [

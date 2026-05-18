@@ -684,15 +684,15 @@ async function onGenerateClick() {
   const canvas1 = await html2canvas(
     document.getElementById('a4Page1'),
     {
-      scale: 2
+      scale: 1.5
     }
   );
 
-  const imgData1 = canvas1.toDataURL('image/png');
+  const imgData1 = canvas1.toDataURL('image/jpeg', 0.85);
 
   pdf.addImage(
     imgData1,
-    'PNG',
+    'JPEG',
     0,
     0,
     pageWidth,
@@ -708,15 +708,15 @@ async function onGenerateClick() {
   const canvas2 = await html2canvas(
     document.getElementById('a4Page2'),
     {
-      scale: 2
+      scale: 1.5
     }
   );
 
-  const imgData2 = canvas2.toDataURL('image/png');
+  const imgData2 = canvas2.toDataURL('image/jpeg', 0.85);
 
   pdf.addImage(
     imgData2,
-    'PNG',
+    'JPEG',
     0,
     0,
     pageWidth,
