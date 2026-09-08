@@ -1,5 +1,5 @@
 export const APP_NAME = "OMU - Générateur de devis et contrats";
-export const APP_VERSION = '0.0.0.3';
+export const APP_VERSION = '0.0.0.4';
 export const APP_LOCAL_STORAGE_ID = `omu-gdc-0001`;
 
 /* 
@@ -7,6 +7,7 @@ export const APP_LOCAL_STORAGE_ID = `omu-gdc-0001`;
 
 # CHANGELOG ###############################################
 
+v 0.0.0.4 - Rework prestations
 v 0.0.0.3 - fix file size => PNG to JPEG
 v 0.0.0.2 - fix line height mobile
 v 0.0.0.1 - init

@@ -14,48 +14,43 @@ const FOOTER = document.getElementById('footer');
 const PRESTATIONS = [
   {
     id: 0,
-    name: 'Maquillage mariée naturel + 1 essai',
-    price: 75,
+    name: 'Maquillage mariée Signature + 1 essai',
+    price: 85,
   },
   {
     id: 1,
-    name: 'Maquillage mariée sophistiqué + 1 essai',
-    price: 95,
+    name: 'Maquillage mariée Prestige + 1 essai',
+    price: 105,
   },
   {
     id: 2,
-    name: 'Forfait Mariée maquillage naturel et coiffure lâchée + 1 essai',
-    price: 104,
+    name: 'Coiffure mariée Signature + 1 essai',
+    price: 45,
   },
   {
     id: 3,
-    name: 'Forfait Mariée maquillage naturel et coiffure attachée + 1 essai',
-    price: 114,
+    name: 'Coiffure mariée Prestige + 1 essai',
+    price: 60,
   },
   {
     id: 4,
-    name: 'Forfait Mariée maquillage sophistiqué et coiffure lâchée + 1 essai',
-    price: 124,
+    name: 'Formule mariée Premium + 1 essai',
+    price: 160,
   },
   {
     id: 5,
-    name: 'Forfait Mariée maquillage sophistiqué et coiffure attachée + 1 essai',
-    price: 134,
-  },
-  {
-    id: 6,
     name: 'Maquillage Invitée',
-    price: 29,
+    price: 40,
   },
   {
     id: 6,
     name: 'Coiffure Invitée',
-    price: 29,
+    price: 40,
   },
   {
-    id: 8,
-    name: 'Forfait Invitée',
-    price: 49,
+    id: 7,
+    name: 'Formule Invitée',
+    price: 65,
   },
 ];
 
