@@ -16,41 +16,49 @@ const PRESTATIONS = [
     id: 0,
     name: 'Maquillage mariée Signature + 1 essai',
     price: 85,
+    isBride: true,
   },
   {
     id: 1,
     name: 'Maquillage mariée Prestige + 1 essai',
     price: 105,
+    isBride: true,
   },
   {
     id: 2,
     name: 'Coiffure mariée Signature + 1 essai',
     price: 45,
+    isBride: true,
   },
   {
     id: 3,
     name: 'Coiffure mariée Prestige + 1 essai',
     price: 60,
+    isBride: true,
   },
   {
     id: 4,
     name: 'Formule mariée Premium + 1 essai',
     price: 160,
+    isBride: true,
   },
   {
     id: 5,
     name: 'Maquillage Invitée',
     price: 40,
+    isBride: false,
   },
   {
     id: 6,
     name: 'Coiffure Invitée',
     price: 40,
+    isBride: false,
   },
   {
     id: 7,
     name: 'Formule Invitée',
     price: 65,
+    isBride: false,
   },
 ];
 
@@ -429,6 +437,10 @@ async function onGenerateClick() {
   document.getElementById('popUp').classList.remove('hidden');
   MAIN.classList.add('hidden');
   const a4Page1 = document.getElementById('a4Page1');
+  let hasBridePresta = false;
+  for (let presta of ESTIMATE_PRESTATIONS) {
+    if (presta.prestation.isBride) hasBridePresta = true;
+  }
   a4Page1.innerHTML = `
     <div class="top-block">
       <img src="${APP_BASE_PATH}assets/medias/images/LOGO_OPALE_MAKEUP_fond_blanc.png" />
@@ -519,91 +531,81 @@ async function onGenerateClick() {
       <div class="paragraph-block">
         <strong>Objet</strong>
         <p>
-        Le présent contrat a pour objet de définir les conditions de la 
-        prestation de services suivante :
+          Le présent contrat a pour objet de définir les conditions de la 
+          prestation de services suivante :
         </p>
-        <span>Mise en beauté mariage le ${PRESTA_DATE}${TRAVEL_EXPENSES ? ` à ${PRESTA_CITY}` : ''}</span>
+        <span>Mise en beauté${hasBridePresta ? ` mariage` : ''}${TRAVEL_EXPENSES ? ` à ${PRESTA_CITY}` : ''} le ${PRESTA_DATE}</span>
       </div>
 
       <div class="paragraph-block">
         <strong>Tarification</strong>
         <p>
-        Coût total estimé de la prestation : <strong>${GLOBAL_TOTAL.toFixed(2)} €</strong>
+          Coût total estimé de la prestation : <strong>${GLOBAL_TOTAL.toFixed(2)} €</strong>
         </p>
       </div>
       
       <div class="paragraph-block">
         <strong>Modalités de paiement</strong>
-        <ul>
-          <li>
-            <strong>1. Paiement lors de l'essai :</strong>
-            <p>
-            Le client s'engage à régler un acompte minimum correspondant à 30% du montant de la prestation mariée${TRAVEL_EXPENSES ? ' + FRAIS DE DÉPLACEMENT JOUR DE L\'ESSAI' : ''}.
-            </p>
-          </li>
-          <li>
-            <strong>2. Solde du paiement pour le forfait marié :</strong>
-            ${!TRAVEL_EXPENSES ? `
+          <ul>
+            <li>
+              <strong>1. Paiement lors de ${hasBridePresta ? `l'essai` : `la signature du devis`} :</strong>
+              <p>
+                Le client s'engage à régler un acompte minimum correspondant à 30% du montant de la prestation${hasBridePresta ? ` mariée` : ''}${TRAVEL_EXPENSES ? ` + les frais de déplacement` : ''}${hasBridePresta ? ` lors de l'essai` : ` à la signature du devis soit : <strong>${(ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * .3).toFixed(2)} €</strong>`}.
+              </p>
+            </li>
+            <li>
+              <strong>2. Solde du paiement${hasBridePresta ? ` pour la prestation mariée` : ''} :</strong>
+              ${hasBridePresta ? `
               <ul>
                 <li>
                   <strong>Option 1 - Paiement total anticipé</strong>
                   <p>
-                    Le client peut choisir de régler la totalité du montant de la prestation mariée le jour de l'essai.<br>
-                    Dans ce cas, aucune autre somme ne sera due lors de la prestation finale concernant la prestation mariée.
+                    Le client peut choisir de régler la totalité du montant de la prestation mariée${TRAVEL_EXPENSES ? `, ainsi que les frais de déplacement essai et jour j,` : ''} dès le jour de l'essai.<br>
+                    Dans ce cas, aucune autre somme ne sera due lors de la prestation finale concernant la prestation mariée${TRAVEL_EXPENSES ? ` ainsi que les frais de déplacement` : ''}.
                   </p>
                 </li>
                 <li>
                   <strong>Option 2 - Paiement partiel</strong>
                   <p>
-                    Le client peut également choisir de régler uniquement l'acompte minimum de 30 % du montant de la prestation mariée lors de l'essai soit : <strong>${(ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * .3).toFixed(2)} €</strong>.<br>
-                    Le solde restant sera alors exigé le jour de la prestation finale soit : <strong>${(ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * .7).toFixed(2)} €</strong>.
+                    Le client peut également choisir de régler uniquement l'acompte minimum de 30 % du montant de la prestation mariée lors de l'essai soit : <strong>${(ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * .3).toFixed(2)} €</strong>${TRAVEL_EXPENSES ? ` + les frais de déplacement du jour de l'essai soit : <strong>${(TRAVEL_DISTANCE_TRY * TRAVEL_EXPENSES_PRICE).toFixed(2)} €</strong>` : ''}.<br>
+                    ${TRAVEL_EXPENSES ? `
+                      Le solde restant sera alors exigé le jour de la prestation finale :<br>
+                      <span>- Reste de la prestation mariée soit : <strong>${(ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * .7).toFixed(2)} €</strong></span><br>
+                      <span>- Frais de déplacement du jour j soit : <strong>${(TRAVEL_DISTANCE_PRESTA * TRAVEL_EXPENSES_PRICE).toFixed(2)} €</strong></span>
+                    ` : `
+                      Le solde restant sera alors exigé le jour de la prestation finale soit : <strong>${(ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * .7).toFixed(2)} €</strong>.
+                    `}
                   </p>
                 </li>
               </ul>
-            ` : `
-              <ul>
-                <li>
-                  <strong>Option 1 - Paiement total anticipé</strong>
-                  <p>
-                    Le client peut choisir de régler la totalité du montant de la prestation mariée le jour de l'essai ainsi que les frais de déplacement essai et jour j.<br>
-                    Dans ce cas, aucune autre somme ne sera due lors de la prestation finale concernant la prestation mariée ainsi que les frais des déplacement.
-                  </p>
-                </li>
-                <li>
-                  <strong>Option 2 - Paiement partiel</strong>
-                  <p>
-                    Le client peut également choisir de régler uniquement l'acompte minimum de 30 % du montant de la prestation mariée lors de l'essai soit : <strong>${(ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * 0.3).toFixed(2)} €</strong> + les frais de déplacement du jour de l'essai soit : <strong>${(TRAVEL_DISTANCE_TRY * TRAVEL_EXPENSES_PRICE).toFixed(2)} €</strong>.<br>
-                    Le solde restant sera alors exigé le jour de la prestation finale. Reste de la prestation mariée soit : <strong>${(ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * 0.7).toFixed(2)} €</strong> + frais de déplacement du jour j soit : <strong>${(TRAVEL_DISTANCE_PRESTA * TRAVEL_EXPENSES_PRICE).toFixed(2)} €</strong>.
-                  </p>
-                </li>
-              </ul>
-            `}
-          </li>
-          ${ESTIMATE_PRESTATIONS.length > 1 ? `
+              ` : `
+              Le client s'engage à régler le reste de la somme le jour de la prestation soit : <strong>${(ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * .7).toFixed(2)} €</strong>.
+              `}
+            </li>
+            ${ESTIMATE_PRESTATIONS.length > 1 ? `
             <li>
               <strong>3. Soldes des autres prestations :</strong>
               <p>
-              Les autres prestations supplémentaires mentionnées dans le devis devront être
-              réglées intégralement le jour de la prestation, sauf accord préalable entre 
-              les parties.
+                Les autres prestations supplémentaires mentionnées dans le devis devront être
+                réglées intégralement le jour de la prestation, sauf accord préalable entre 
+                les parties.
               </p>
             </li>
-            ` : ''}
-          <li>
-            <strong>${ESTIMATE_PRESTATIONS.length > 1 ? `4` : '3'}. Non-paiement :</strong>
-            <p>
-            En cas de non-paiement de l'acompte de 30% de la prestation Mariée le jour de l'essai, 
-            l'essai pourra être annulé, et l'entreprise se réserve le droit d'annuler la 
-            prestation complète.
-            </p>
-          </li>
-        </ul>
+              ` : ''}
+            <li>
+              <strong>${ESTIMATE_PRESTATIONS.length > 1 ? `4` : '3'}. Non-paiement :</strong>
+              <p>
+                En cas de non-paiement de l'acompte de 30% de la prestation${hasBridePresta ? ` mariée le jour de l'essai, l'essai` : ` le jour de la signature du devis, la prestation`}, 
+                 pourra être annulé${hasBridePresta ? `` : `e`}, et l'entreprise se réserve le droit d'annuler la prestation complète.
+              </p>
+            </li>
+          </ul>
       </div>
 
       <div class="paragraph-block">
         <strong>Conditions de paiement</strong>
         <p>
-        En cas de retard de paiement, une pénalité de 50 % du montant initial sera appliquée.
+          En cas de retard de paiement, une pénalité de 50 % du montant initial sera appliquée.
         </p>
       </div>
 
@@ -621,7 +623,7 @@ async function onGenerateClick() {
         La signature du présent contrat entraîne la validation de la prestation et la réservation du créneau.<br>
         <strong>
         La réservation de la date est effective dès la signature du devis et du contrat.<br>
-        À ce titre, un acompte de 30 % du montant total de la prestation mariée est obligatoire et non remboursable, 
+        À ce titre, un acompte de 30 % du montant total de la prestation est obligatoire et non remboursable, 
         y compris en cas d'annulation de la prestation par la cliente, quel que soit le délai avant la date du mariage.
         </strong>
         </p>
