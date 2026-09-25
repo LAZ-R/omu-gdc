@@ -562,7 +562,7 @@ async function onGenerateClick() {
             <li>
               <strong>1. Paiement lors de ${hasBridePresta ? `l'essai` : `la signature du devis`} :</strong>
               <p>
-                Le client s'engage à régler un acompte minimum correspondant à 30% du montant de la prestation${hasBridePresta ? ` mariée` : ''}${TRAVEL_EXPENSES ? ` + les frais de déplacement` : ''}${hasBridePresta ? ` lors de l'essai` : ` à la signature du devis soit : <strong>${(ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * .3).toFixed(2)} €</strong>`}.
+                Le client s'engage à régler un acompte minimum correspondant à 30% du montant de la prestation${hasBridePresta ? ` mariée` : ''}${TRAVEL_EXPENSES ? ` + les frais de déplacement` : ''}${hasBridePresta ? ` lors de l'essai` : ` à la signature du devis soit : <strong>${((ESTIMATE_PRESTATIONS[0].prestation.price * ESTIMATE_PRESTATIONS[0].quantity * .3) + (TRAVEL_DISTANCE_PRESTA * TRAVEL_EXPENSES_PRICE)).toFixed(2)} €</strong>`}.
               </p>
             </li>
             <li>
