@@ -60,6 +60,18 @@ const PRESTATIONS = [
     price: 65,
     isBride: false,
   },
+  {
+    id: 8,
+    name: 'Coiffure petite fille - moins de 12 ans',
+    price: 20,
+    isBride: false,
+  },
+  {
+    id: 9,
+    name: 'Maquillage ado - entre 12 et 16 ans',
+    price: 20,
+    isBride: false,
+  },
 ];
 
 const user = getUser();
